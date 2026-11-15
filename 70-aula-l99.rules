@@ -1,0 +1,8 @@
+# Grant the logged-in desktop user access to the L99 live-data HID interface.
+# Install as 70-aula-l99.rules: uaccess must be tagged before 73-seat-late.rules.
+# Mark the matching USB device first, then apply access only to interface 03.
+SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="800a", ENV{AULA_L99}="1"
+SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ENV{AULA_L99}=="1", ATTRS{bInterfaceNumber}=="03", TAG+="uaccess", MODE="0660"
+
+# L99 touchscreen image/GIF upload port (separate USB device).
+SUBSYSTEM=="tty", KERNEL=="ttyACM*", ATTRS{idVendor}=="eeef", ATTRS{idProduct}=="268a", TAG+="uaccess", MODE="0660"

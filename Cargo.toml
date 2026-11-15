@@ -1,0 +1,12 @@
+[package]
+name = "aula_l99_linux"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-2.0-or-later"
+description = "Unofficial AULA L99 Linux desktop controls and LCD tools"
+
+[dependencies]
+eframe = { version = "0.31.1", default-features = false, features = ["default_fonts", "glow", "x11"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+image = { version = "0.25", default-features = false, features = ["png"] }
