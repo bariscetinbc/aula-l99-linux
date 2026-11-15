@@ -1,0 +1,43 @@
+name: Build and Release Linux Binary
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04 # Ensures broad glibc compatibility across Linux distros
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libudev-dev pkg-config
+
+      - name: Build Rust release binary
+        run: cargo build --release
+
+      - name: Package binary and runtime files
+        run: |
+          mkdir -p dist/src
+          # Copies the compiled binary (adjust name if Cargo.toml [package] name differs)
+          cp target/release/aula-l99-linux dist/ || cp target/release/$(grep -m1 '^name' Cargo.toml | cut -d '"' -f2) dist/
+          cp 70-aula-l99.rules install-permissions.sh README.md LICENSE dist/
+          cp src/*.py dist/src/
+          tar -czvf aula-l99-linux-x86_64.tar.gz -C dist .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: aula-l99-linux-x86_64.tar.gz
+          generate_release_notes: true
