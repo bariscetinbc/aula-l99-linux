@@ -3,12 +3,6 @@
 Unofficial Linux desktop controls for the AULA L99 keyboard. Licensed under GNU GPL version 2 or later (GPL-2.0-or-later);
 see [LICENSE](LICENSE) and [credits](THIRD_PARTY.md).
 
-## Publish on GitHub
-
-Follow [the publishing steps](PUBLISHING.md). Run
-`sh scripts/package-source.sh` to create a clean source archive for a new public
-repository. No account, upload or publication is performed by that script.
-
 ## Build and run on Linux
 
 Install stable Rust, a C compiler, X11/OpenGL development libraries, Python 3
